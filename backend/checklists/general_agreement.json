@@ -1,0 +1,35 @@
+{
+  "doc_type": "general_agreement",
+  "required_clauses": [
+    {
+      "name": "Parties involved (names and roles)",
+      "keywords": ["party", "parties", "between", "hereinafter"],
+      "severity": "critical"
+    },
+    {
+      "name": "Effective date / start date",
+      "keywords": ["effective date", "commencement", "start date", "dated"],
+      "severity": "critical"
+    },
+    {
+      "name": "Termination conditions",
+      "keywords": ["terminate", "termination", "end", "expiry", "cancel"],
+      "severity": "critical"
+    },
+    {
+      "name": "Payment terms (if applicable)",
+      "keywords": ["payment", "fee", "compensation", "amount", "price"],
+      "severity": "warning"
+    },
+    {
+      "name": "Dispute resolution",
+      "keywords": ["dispute", "arbitration", "mediation", "court", "jurisdiction"],
+      "severity": "warning"
+    },
+    {
+      "name": "Governing law",
+      "keywords": ["governing law", "applicable law", "laws of"],
+      "severity": "warning"
+    }
+  ]
+}

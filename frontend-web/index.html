@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClauseGuard Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo-container">
+            <i class="fa-solid fa-shield-halved"></i>
+            ClauseGuard
+        </div>
+        <nav class="nav-menu">
+            <a href="#" class="nav-item active">
+                <i class="fa-solid fa-border-all"></i> Dashboard
+            </a>
+            <a href="profile.html" class="nav-item">
+                <i class="fa-solid fa-user"></i> My Profile
+            </a>
+            <a href="#" class="nav-item" onclick="logout()">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-wrapper">
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search documents...">
+            </div>
+            <div class="topbar-actions">
+                <button class="btn-primary" onclick="document.getElementById('file-input').click()">
+                    <i class="fa-solid fa-plus"></i> Upload Document
+                </button>
+            </div>
+        </header>
+
+        <!-- Content Area -->
+        <main class="content-area">
+            <div class="page-header">
+                <h1 class="page-title">Dashboard Overview</h1>
+                <p class="page-subtitle">Analyze legal documents, monitor risk, and detect missing clauses instantly.</p>
+            </div>
+
+            <!-- Upload Section -->
+            <section id="upload-section">
+                <div class="upload-area" id="drop-zone">
+                    <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                    <h3>Drag & drop your legal document</h3>
+                    <p class="text-muted">Supports PDF, JPG, PNG, TIFF, WEBP</p>
+                    <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png,.bmp,.tiff,.webp" hidden>
+                    <div id="file-name-display" class="file-name-display hidden"></div>
+                </div>
+                
+                <div id="action-area" class="hidden" style="text-align: right; margin-bottom: 2rem;">
+                    <button id="analyze-btn" class="btn-primary">
+                        <i class="fa-solid fa-magnifying-glass"></i> Start Analysis
+                    </button>
+                </div>
+                
+                <div id="loading-indicator" class="loading-state hidden card">
+                    <div class="spinner"></div>
+                    <p class="text-muted">Analyzing document... running AI engines.</p>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="results-section" class="hidden">
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="card stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon" style="background: var(--red)"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                            High Risk Clauses
+                        </div>
+                        <div class="stat-value text-red" id="stat-high-risk">0</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon" style="background: var(--amber)"><i class="fa-solid fa-xmark"></i></div>
+                            Missing Clauses
+                        </div>
+                        <div class="stat-value text-amber" id="stat-missing">0</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon" style="background: var(--green)"><i class="fa-solid fa-check"></i></div>
+                            Clauses Found OK
+                        </div>
+                        <div class="stat-value text-green" id="stat-found">0</div>
+                    </div>
+                </div>
+
+                <!-- Tabs & Content -->
+                <div class="card">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" data-tab="summary">Document Summary</button>
+                        <button class="tab-btn" data-tab="risks">Risk Analysis</button>
+                        <button class="tab-btn" data-tab="chat">Ask AI</button>
+                    </div>
+
+                    <!-- Tab 1: Summary -->
+                    <div id="tab-summary" class="tab-pane active">
+                        <h3 style="margin-bottom: 1rem;">Plain English Summary</h3>
+                        <div id="plain-summary" style="background: #F8FAFC; padding: 1.5rem; border-radius: var(--radius-sm); border-left: 4px solid var(--primary); margin-bottom: 2rem; color: var(--text-muted);">
+                            <!-- Inserted by JS -->
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                            <div>
+                                <h4 style="margin-bottom: 1rem; color: var(--text-main);">Key Details</h4>
+                                <div id="key-details-list" style="display: flex; flex-direction: column; gap: 0.75rem;"></div>
+                            </div>
+                            <div>
+                                <h4 style="margin-bottom: 1rem; color: var(--text-main);">Top Identified Risks</h4>
+                                <div id="top-risks-list" style="display: flex; flex-direction: column; gap: 0.75rem;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: Risks -->
+                    <div id="tab-risks" class="tab-pane">
+                        <div id="risks-accordion">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Tab 3: Chat -->
+                    <div id="tab-chat" class="tab-pane">
+                        <div class="chat-box">
+                            <div class="chat-history" id="chat-history">
+                                <div style="text-align: center; margin: auto; color: var(--text-muted);">
+                                    <i class="fa-solid fa-robot" style="font-size: 2rem; margin-bottom: 1rem; color: var(--primary);"></i>
+                                    <p>Ask anything about the document.</p>
+                                </div>
+                            </div>
+                            <form class="chat-input" id="chat-form" onsubmit="handleChatSubmit(event)">
+                                <input type="text" id="chat-input" placeholder="Type your question here...">
+                                <button type="submit" class="btn-primary" style="padding: 0.75rem; border-radius: 50%;"><i class="fa-solid fa-paper-plane"></i></button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

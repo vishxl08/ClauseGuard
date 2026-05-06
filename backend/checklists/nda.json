@@ -1,0 +1,40 @@
+{
+  "doc_type": "nda",
+  "required_clauses": [
+    {
+      "name": "Definition of confidential information",
+      "keywords": ["confidential information", "proprietary", "trade secret", "defined as"],
+      "severity": "critical"
+    },
+    {
+      "name": "Duration / expiry of NDA",
+      "keywords": ["duration", "term", "expires", "period", "years"],
+      "severity": "critical"
+    },
+    {
+      "name": "Permitted disclosures / exceptions",
+      "keywords": ["except", "permitted", "exclude", "public domain", "required by law"],
+      "severity": "critical"
+    },
+    {
+      "name": "Consequences of breach",
+      "keywords": ["breach", "violation", "penalty", "damages", "injunction"],
+      "severity": "critical"
+    },
+    {
+      "name": "Return of confidential materials",
+      "keywords": ["return", "destroy", "delete", "materials", "documents"],
+      "severity": "warning"
+    },
+    {
+      "name": "Governing law / jurisdiction",
+      "keywords": ["governing law", "jurisdiction", "court", "arbitration"],
+      "severity": "warning"
+    },
+    {
+      "name": "Mutual vs one-way NDA clarity",
+      "keywords": ["mutual", "one-way", "unilateral", "both parties", "disclosing party"],
+      "severity": "info"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "doc_type": "loan_agreement",
+  "required_clauses": [
+    {
+      "name": "Loan amount (principal)",
+      "keywords": ["principal", "loan amount", "sanctioned amount", "disbursement"],
+      "severity": "critical"
+    },
+    {
+      "name": "Interest rate",
+      "keywords": ["interest rate", "rate of interest", "annual rate", "per annum"],
+      "severity": "critical"
+    },
+    {
+      "name": "Repayment schedule / EMI",
+      "keywords": ["repayment", "emi", "installment", "monthly payment"],
+      "severity": "critical"
+    },
+    {
+      "name": "Prepayment / foreclosure penalty",
+      "keywords": ["prepayment", "foreclosure", "early repayment", "penalty"],
+      "severity": "critical"
+    },
+    {
+      "name": "Late payment penalty",
+      "keywords": ["late payment", "penalty", "default", "overdue"],
+      "severity": "critical"
+    },
+    {
+      "name": "Collateral / security",
+      "keywords": ["collateral", "security", "mortgage", "pledge", "hypothecation"],
+      "severity": "warning"
+    },
+    {
+      "name": "Loan tenure / duration",
+      "keywords": ["tenure", "duration", "term", "period", "months", "years"],
+      "severity": "warning"
+    },
+    {
+      "name": "Dispute resolution clause",
+      "keywords": ["dispute", "arbitration", "jurisdiction", "court"],
+      "severity": "warning"
+    }
+  ]
+}

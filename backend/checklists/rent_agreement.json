@@ -1,0 +1,55 @@
+{
+  "doc_type": "rent_agreement",
+  "required_clauses": [
+    {
+      "name": "Rent amount and due date",
+      "keywords": ["rent", "monthly", "due date", "payable"],
+      "severity": "critical"
+    },
+    {
+      "name": "Security deposit amount",
+      "keywords": ["security deposit", "advance", "refundable deposit"],
+      "severity": "critical"
+    },
+    {
+      "name": "Security deposit refund timeline",
+      "keywords": ["refund", "return deposit", "deposit back", "deduction"],
+      "severity": "critical"
+    },
+    {
+      "name": "Notice period for termination",
+      "keywords": ["notice period", "terminate", "vacate", "days notice"],
+      "severity": "critical"
+    },
+    {
+      "name": "Rent increase cap or limit",
+      "keywords": ["rent increase", "revision", "hike", "escalation", "percent"],
+      "severity": "warning"
+    },
+    {
+      "name": "Maintenance responsibility",
+      "keywords": ["maintenance", "repair", "damage", "upkeep"],
+      "severity": "warning"
+    },
+    {
+      "name": "Landlord entry notice requirement",
+      "keywords": ["entry", "inspect", "visit", "prior notice", "permission"],
+      "severity": "warning"
+    },
+    {
+      "name": "Dispute resolution clause",
+      "keywords": ["dispute", "arbitration", "jurisdiction", "court", "resolution"],
+      "severity": "warning"
+    },
+    {
+      "name": "Lock-in period",
+      "keywords": ["lock-in", "lock in", "minimum stay", "minimum period"],
+      "severity": "info"
+    },
+    {
+      "name": "Sub-letting restriction",
+      "keywords": ["sub-let", "sublet", "sublease", "third party"],
+      "severity": "info"
+    }
+  ]
+}

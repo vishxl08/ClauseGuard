@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - ClauseGuard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .profile-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+        }
+        .header-actions {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+        }
+        .form-group {
+            margin-top: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+        .form-group input {
+            width: 100%;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            outline: none;
+            transition: var(--transition);
+        }
+        .form-group input:focus {
+            border-color: var(--primary);
+        }
+        .api-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+        }
+        .status-missing {
+            background: var(--red-bg);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        .status-active {
+            background: var(--green-bg);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        .help-text {
+            margin-top: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .help-text a {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="background-effects">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+    <div class="header-actions">
+        <a href="index.html" class="btn-action" style="background:transparent;border:1px solid var(--border-glass);color:var(--text-main);"><i class="fa-solid fa-arrow-left"></i> Back to App</a>
+        <button onclick="logout()" class="btn-action" style="background:transparent;border:1px solid var(--red);color:var(--red);margin-left:1rem;"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h1>My <span>Profile</span></h1>
+            </div>
+            <p class="subtitle" id="user-email">Loading...</p>
+        </header>
+
+        <main>
+            <div class="glass-card profile-container">
+                <h2>API Key Configuration</h2>
+                <p class="text-muted" style="margin-top:0.5rem;">ClauseGuard requires a personal Groq API key to process documents.</p>
+                
+                <div id="api-status" class="api-status status-missing">
+                    <i class="fa-solid fa-circle-xmark"></i> No API Key Configured
+                </div>
+
+                <form id="apikey-form" style="margin-top: 2rem;">
+                    <div class="form-group">
+                        <label>Your Groq API Key (starts with gsk_)</label>
+                        <input type="password" id="api-key-input" placeholder="gsk_..." required>
+                    </div>
+                    <div class="help-text">
+                        Get your free API key at <a href="https://console.groq.com/keys" target="_blank">console.groq.com/keys <i class="fa-solid fa-external-link-alt" style="font-size:0.75rem"></i></a>
+                    </div>
+                    <button type="submit" class="btn-primary" style="margin-top:1.5rem;width:100%;justify-content:center;">Save API Key</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8000';
+        const token = localStorage.getItem('token');
+
+        if(!token) {
+            window.location.href = 'login.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = 'login.html';
+        }
+
+        async function fetchProfile() {
+            try {
+                const res = await fetch(`${API_URL}/auth/me`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if(res.status === 401) {
+                    logout();
+                    return;
+                }
+                
+                const data = await res.json();
+                document.getElementById('user-email').textContent = data.email;
+                
+                const statusDiv = document.getElementById('api-status');
+                if(data.has_api_key) {
+                    statusDiv.className = 'api-status status-active';
+                    statusDiv.innerHTML = '<i class="fa-solid fa-circle-check"></i> API Key Configured';
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        document.getElementById('apikey-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+            
+            const key = document.getElementById('api-key-input').value;
+            
+            try {
+                const res = await fetch(`${API_URL}/auth/set_api_key`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ api_key: key })
+                });
+                
+                if(res.ok) {
+                    alert('API Key saved successfully!');
+                    document.getElementById('api-key-input').value = '';
+                    fetchProfile();
+                } else {
+                    alert('Failed to save API key.');
+                }
+            } catch (err) {
+                alert('Error saving API key.');
+            }
+            
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+        });
+
+        fetchProfile();
+    </script>
+</body>
+</html>
