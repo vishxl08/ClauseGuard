@@ -104,6 +104,7 @@
                     <div class="tabs-header">
                         <button class="tab-btn active" data-tab="summary">Document Summary</button>
                         <button class="tab-btn" data-tab="risks">Risk Analysis</button>
+                        <button class="tab-btn" data-tab="missing">Missing Clauses</button>
                         <button class="tab-btn" data-tab="chat">Ask AI</button>
                     </div>
 
@@ -133,7 +134,21 @@
                         </div>
                     </div>
 
-                    <!-- Tab 3: Chat -->
+                    <!-- Tab 3: Missing Clauses -->
+                    <div id="tab-missing" class="tab-pane">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                            <div class="card" style="border: 1px solid var(--red-bg);">
+                                <h3 style="color: var(--text-main); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-triangle-exclamation text-red"></i> Missing Clauses</h3>
+                                <div id="missing-items-list" style="display: flex; flex-direction: column; gap: 0.75rem;"></div>
+                            </div>
+                            <div class="card" style="border: 1px solid var(--green-bg);">
+                                <h3 style="color: var(--text-main); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-check text-green"></i> Present Clauses</h3>
+                                <div id="found-items-list" style="display: flex; flex-direction: column; gap: 0.75rem;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 4: Chat -->
                     <div id="tab-chat" class="tab-pane">
                         <div class="chat-box">
                             <div class="chat-history" id="chat-history">

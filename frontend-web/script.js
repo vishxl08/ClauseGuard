@@ -165,7 +165,28 @@ function populateResults(data) {
         risksAccordion.innerHTML = '<p>No clause risk data available.</p>';
     }
 
-    // Removed Missing tab logic, missing clauses count is in top stats.
+    // Missing Tab
+    const missingList = document.getElementById('missing-items-list');
+    const foundList = document.getElementById('found-items-list');
+    
+    if (missing_clauses.clauses && missing_clauses.clauses.length) {
+        const missing = missing_clauses.clauses.filter(c => !c.found);
+        const found = missing_clauses.clauses.filter(c => c.found);
+        
+        missingList.innerHTML = missing.map(c => `
+            <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: #F9FAFB; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+                <span><strong>${c.name}</strong></span>
+                <span class="badge badge-${c.severity || 'high'}">${(c.severity || 'high').toUpperCase()}</span>
+            </div>
+        `).join('');
+        
+        foundList.innerHTML = found.map(c => `
+            <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: #F9FAFB; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+                <span>${c.name}</span>
+                <span class="badge badge-low">FOUND</span>
+            </div>
+        `).join('');
+    }
 
     // Reset Chat
     document.getElementById('chat-history').innerHTML = `
