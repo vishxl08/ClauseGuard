@@ -4,37 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - ClauseGuard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=2.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        body {
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #F4F7F9 0%, #E2E8F0 100%);
+        }
         .auth-container {
-            max-width: 400px;
-            margin: 4rem auto;
+            width: 100%;
+            max-width: 420px;
             padding: 2.5rem;
             text-align: center;
         }
-        .auth-form {
+        .auth-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark-blue);
+            margin-bottom: 0.5rem;
             display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-            margin-top: 2rem;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
+        .auth-logo i { color: var(--primary); }
         .form-group {
             text-align: left;
+            margin-top: 1.5rem;
         }
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
             color: var(--text-muted);
             font-size: 0.9rem;
+            font-weight: 500;
         }
         .form-group input {
             width: 100%;
-            background: rgba(0,0,0,0.2);
-            border: 1px solid var(--border-glass);
+            background: #F9FAFB;
+            border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 0.75rem 1rem;
+            padding: 0.8rem 1rem;
             border-radius: var(--radius-sm);
             font-family: inherit;
             outline: none;
@@ -42,87 +54,49 @@
         }
         .form-group input:focus {
             border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 196, 154, 0.1);
         }
-        .auth-btn {
-            width: 100%;
-            justify-content: center;
-            margin-top: 1rem;
-        }
-        .auth-switch {
-            margin-top: 1.5rem;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        .auth-switch a {
-            color: var(--primary);
-            text-decoration: none;
-            cursor: pointer;
-            font-weight: 500;
-        }
-        .auth-error {
-            color: var(--red);
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            display: none;
-        }
+        .auth-btn { width: 100%; justify-content: center; margin-top: 1.5rem; padding: 0.8rem; }
+        .auth-switch { margin-top: 1.5rem; color: var(--text-muted); font-size: 0.9rem; }
+        .auth-switch a { color: var(--primary); text-decoration: none; cursor: pointer; font-weight: 600; }
+        .auth-error { color: var(--red); font-size: 0.9rem; margin-top: 1rem; display: none; background: var(--red-bg); padding: 0.75rem; border-radius: var(--radius-sm); }
     </style>
 </head>
 <body>
-    <div class="background-effects">
-        <div class="glow glow-1"></div>
-        <div class="glow glow-2"></div>
+    <div class="card auth-container" id="login-box">
+        <div class="auth-logo"><i class="fa-solid fa-shield-halved"></i> ClauseGuard</div>
+        <p class="text-muted">Welcome back! Please enter your details.</p>
+        <div id="login-error" class="auth-error"></div>
+        <form id="login-form">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="login-email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="login-password" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn-primary auth-btn">Sign in</button>
+        </form>
+        <div class="auth-switch">Don't have an account? <a onclick="toggleAuth('register')">Sign up</a></div>
     </div>
 
-    <div class="app-container">
-        <header>
-            <div class="logo">
-                <i class="fa-solid fa-shield-halved"></i>
-                <h1>Clause<span>Guard</span></h1>
+    <div class="card auth-container hidden" id="register-box">
+        <div class="auth-logo"><i class="fa-solid fa-shield-halved"></i> ClauseGuard</div>
+        <p class="text-muted">Create an account to start analyzing.</p>
+        <div id="register-error" class="auth-error"></div>
+        <form id="register-form">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="reg-email" placeholder="Enter your email" required>
             </div>
-            <p class="subtitle">Secure Legal Document Analysis</p>
-        </header>
-
-        <main>
-            <div class="glass-card auth-container" id="login-box">
-                <h2>Welcome Back</h2>
-                <p class="text-muted" style="margin-top:0.5rem;">Sign in to your account</p>
-                <div id="login-error" class="auth-error"></div>
-                <form class="auth-form" id="login-form">
-                    <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="email" id="login-email" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="login-password" required>
-                    </div>
-                    <button type="submit" class="btn-primary auth-btn">Sign In</button>
-                </form>
-                <div class="auth-switch">
-                    Don't have an account? <a onclick="toggleAuth('register')">Create one</a>
-                </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="reg-password" placeholder="Create a password" required minlength="6">
             </div>
-
-            <div class="glass-card auth-container hidden" id="register-box">
-                <h2>Create Account</h2>
-                <p class="text-muted" style="margin-top:0.5rem;">Join ClauseGuard securely</p>
-                <div id="register-error" class="auth-error"></div>
-                <form class="auth-form" id="register-form">
-                    <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="email" id="reg-email" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="reg-password" required minlength="6">
-                    </div>
-                    <button type="submit" class="btn-primary auth-btn">Register</button>
-                </form>
-                <div class="auth-switch">
-                    Already have an account? <a onclick="toggleAuth('login')">Sign In</a>
-                </div>
-            </div>
-        </main>
+            <button type="submit" class="btn-primary auth-btn">Create account</button>
+        </form>
+        <div class="auth-switch">Already have an account? <a onclick="toggleAuth('login')">Sign in</a></div>
     </div>
 
     <script>
@@ -168,7 +142,7 @@
                 errDiv.textContent = err.message;
                 errDiv.style.display = 'block';
                 btn.disabled = false;
-                btn.innerHTML = 'Sign In';
+                btn.innerHTML = 'Sign in';
             }
         });
 
@@ -202,7 +176,7 @@
                 errDiv.style.display = 'block';
             }
             btn.disabled = false;
-            btn.innerHTML = 'Register';
+            btn.innerHTML = 'Create account';
         });
     </script>
 </body>
