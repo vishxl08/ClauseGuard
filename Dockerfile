@@ -8,7 +8,6 @@ ENV HOME=/home/user \
 # Install system dependencies (Tesseract OCR for image parsing)
 RUN apt-get update && apt-get install -y \
     tesseract-ocr \
-    libgl1-mesa-glx \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
