@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8000';
+const API_URL = 'https://vy15-clauseguard.hf.space';
 let sessionId = null;
 const token = localStorage.getItem('token');
 
