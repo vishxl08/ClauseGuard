@@ -1,3 +1,12 @@
+---
+title: ClauseGuard
+emoji: 🛡️
+colorFrom: blue
+colorTo: green
+sdk: docker
+pinned: false
+---
+
 # 🛡️ ClauseGuard
 
 > Upload any legal document — get instant risk audit, missing clause detection & plain English summary.
